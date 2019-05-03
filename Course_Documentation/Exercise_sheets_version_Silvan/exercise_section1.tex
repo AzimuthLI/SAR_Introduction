@@ -1,0 +1,73 @@
+\section{Exercise one: 1D data}
+This exercise provides an example how the range-compression (range-focusing) of a radar system works. Another keyword for the method is "{}matched pulse"{} filtering. (Frequency-step radars and frequency-modulated continous wave (FMCW) radars use a different approach.)
+\subsection{Visualization of a Chirped pulse}
+Plot real and imaginary components of a chirped puls $s(t)$ with the form
+\begin{align}
+  s(t) &= \left\{\begin{array}{ll}
+       \exp\left(i t\cdot\left[\omega_0 + \pi\beta_c t\right]\right)&|t| < \frac{\tau_p}{2}\\
+       \\
+       0 & \text{else}
+       \end{array}\right.
+\end{align}
+The pulse envelope is rectangular; the envelope can also be called box-car. Where $\omega_0 = 2\pi f_0$ is the central frequency [s$^{-1}$], $\tau_p$ is the puls length [s] and $\beta_c$ the frequency change rate [Hz/s]. The bandwidth of the pulse is given by $f_{bw} = \beta_c\cdot \tau_p$ [Hz].
+
+\subsubsection{zero padding}
+Plot pulse with some zeros padded
+
+\subsection{pulse compression by matched filtering}
+\subsubsection{...in time domain}\label{sec:boxcarpulse}
+Compress the pulse in time domain by a convolution with the filterfunction $h(t)$ and plot it. In principle you calculate the autocorrelation function $g_1(\tau)$ of the puls with itself:
+\begin{align}
+g_1(\tau) = \int_{-\infty}^{+\infty}s^*(t)s(t+\tau)\dx t = \int s(t')h(\tau-t') \dx t' = (s*h)(\tau)
+\end{align}
+Where $t' = t+\tau$ and the matched filter function is defined as $h(t) = s^*(-t)$.\\
+Literature: \textit{Chapter 1-2.1.1 in the "Scientific SAR User's Guide" by Coert Olmsted}.\\
+(IDL functions which may help: \textit{conj, reverse, convol, findgen, complex, complexarr, fft, abs, plot, window, legend})
+
+\subsubsection{...in frequency-space}
+ As the convolution is very computationally intense compress the pulse in frequency domain:
+\begin{align}
+g_1(\tau) = \mathcal{F}^{-1}\Big\{\mathcal{F}\left((s*h)(\tau)\right)\Big\} = \mathcal{F}^{-1}\Big\{\tilde{s}(\omega))\cdot \tilde{h}(\omega)\Big\}
+\end{align}
+Literature: \textit{Chapter 2.1.2 in the "Scientific SAR User's Guide" by Coert Olmsted}.
+
+
+\subsection{Hamming Window}
+The hamming window is used to reduce side lobes. See e.g. Wikipedia. 
+
+\subsubsection{...in time domain}
+Use a hamming window ($\alpha = 0.54$) to weighten the sharp edges of the pulse in time domain and compare the the compressed pulse (and the side-lobes) with the one from section \ref{sec:boxcarpulse}
+\begin{align}
+w(t) = (\alpha-1)\cdot\cos(\frac{2\pi t}{t_p}) + \alpha
+\end{align}
+
+\subsubsection{...in frequency domain}
+Use a hamming window to smooth the sharp edges of the frequency spectrum and comment on the compressed pulse. The result is not exactly the same as weighting in time-dimain, because the approximation
+\begin{align}
+(h*w)(\omega) \approx h(\omega)\cdot w(\omega-\omega_0)
+\end{align}
+is used. For a hamming window in frequency space use the following weighting function
+\begin{align}
+w(t) = (\alpha-1)\cdot\cos(\frac{\omega - \omega_0}{f_{\text{bw}}}).
+\end{align}
+
+\subsection{Multilooking}
+Multilooking is basically a spatial smoothing filter which is used to reduce the effect of "{}speckle"{} in radar images. This can be a simple spatial box-car filter, or different parts of the spectrum can be focused separately the resulting image intensities are averaged. Multilooking can also be done over a time-series of many images which can be used to enhance the resolution compared to a single radar image.
+
+Speckle are an effect of the coherent illumination used in radar imaging. The same speckle effect appears when a laser is used to illuminate a rough surface. Incoherent light (from thermal radiation sources) does not show the effect of speckle because of the short coherence time of light. The long "{}exposure"{} of a light-illuminated scene (Photo, Eye) of a few milliseconds average already over many many coherent representations of the extremely quickly changing speckle pattern. However, a radar uses a strictly defined pulse shape which does not changes during imaging; therefore speckle remain visible in the radar scene. 
+
+\subsubsection{...in time}
+split the signal in two parts:
+\begin{align}
+s_1(t) &= s(t) \qquad \forall  \quad t < 0\\
+s_2(t) &= s(t) \qquad \forall  \quad t  \geq 0
+\end{align}
+compress each signal using a matched filter and average the absolute values of the signal (the intensity envelopes). Plot the absolute value of the compressed pulse.
+\subsubsection{...in frequency}
+split the spectrum of the signal in two parts:
+\begin{align}
+s_1(\omega) &= s(\omega) \qquad \forall \quad \omega < \omega_0\\
+s_2(\omega) &= s(\omega) \qquad \forall  \quad \omega \geq \omega_0
+\end{align}
+compress each signal in frequency domain, transform back to time domain, and average/add the envelopes (absolute values ) of the compressed pulses.\\
+

@@ -1,0 +1,66 @@
+%\documentclass[12pt,a4paper]{IEEEtran} %!PN
+
+%\begin{document}
+
+\section{Exercise one: 1D data}
+\subsection{Chirped pulse}
+
+Plot real and imaginary parts of a chirped pulse $s(t)$ with form:
+\begin{align}
+  s(t) &= \left\{\begin{array}{ll}
+       \exp\left(j t\left[\omega_0 + \pi\alpha_c t\right]\right)&|t| < \frac{\tau_p}{2}\\
+       \\
+       0 & \text{else}
+       \end{array}\right.
+\end{align}
+where $\omega_0 = 2\pi f_0$ is the central angular frequency, $\tau_p$ is the pulse length and $\alpha_c$ the frequency change rate [Hz/s]. Check out its bandwidth, it should be $f_{bw} = \alpha_c \tau_p \; \;[Hz]$.\\
+ - What are reasonable values for the variables?\\
+ - What is happening if you change the value of $\alpha_c$?\\
+ \textit{Hint: Some relations help you to get nice-looking pulses: $\tau_p = N/f_0$ $(N = 10...50)$, $f_{bw} = k\cdot f_0$ $(k = 0...1)$}
+ 
+
+\subsection{Pulse compression by matched filtering}
+\subsubsection{...in time domain}
+
+Compress the pulse in time domain by a convolution with a filter function $h(t)$, build with the nominal chirp parameters. In this case, you simply calculate the autocorrelation function of the generated pulse:
+\begin{align}
+g_1(\tau) = \int_{-\infty}^{+\infty}s^*(t)s(t+\tau)\dx t = \int s(t')h(\tau-t') \dx t' = (s*h)(\tau)
+\end{align}
+Where $t' = t+\tau$ and $h(t) = s^*(-t)$.\\
+ - Plot the filter $h(t)$ and the result of the filtering. \\
+ - What happen if the $\alpha_c$ used in $h(t)$ is different from the real one (i.e. the one used to generate the chirp $s(t)$)?\\
+
+Literature: \textit{Chapter 1-2.1.1 in the "Scientific SAR User's Guide" by Coert Olmsted}.\\
+IDL functions which may help: \textit{conj, reverse, convol, findgen, complex, complexarr, fft, abs, plot, window, !P.multi, oplot, legend.pro, greek}
+
+
+\subsubsection{...in frequency-space}
+
+Since the convolution is not computationally efficient, it is preferable to perform the match filter in the frequency domain:
+\begin{align}
+g_1(\tau) = \mathcal{F}^{-1}\Big\{\mathcal{F}\left((s*h)(\tau)\right)\Big\} = \mathcal{F}^{-1}\Big\{S(f))\cdot H(f)\Big\}
+\end{align}
+Literature: \textit{Chapter 2.1.2 in the "Scientific SAR User's Guide" by Coert Olmsted}.
+
+Plot both the transformed signals (S and H) and compare them? Do they overlap on the frequency domain? What happen if you shift in frequency one of the two transformed signals? And Why?  
+
+
+\subsection{Hamming Window}
+The hamming window is used to reduce side lobes.
+
+\subsubsection{...in time domain}
+Use a hamming window ($\alpha = 0.54$) to smooth the sharp edges of the pulse in time domain and comment on the compressed pulse
+\begin{align}
+w(t) = (\alpha-1)\cdot\cos(\frac{2\pi t}{t_p}) + \alpha
+\end{align}
+
+\subsubsection{...in frequency domain}
+Use a hamming window to smooth the sharp edges of the frequency spectrum and comment on the compressed pulse. The result is not exactly the same, as the approximation
+\begin{align}
+(h*w)(\omega) \approx h(\omega)\cdot w(\omega-\omega_0)
+\end{align}
+is used. For a hamming window in frequency space use
+\begin{align}
+w(t) = (\alpha-1)\cdot\cos(\frac{\omega - \omega_0}{f_{\text{bw}}}).
+\end{align}
+

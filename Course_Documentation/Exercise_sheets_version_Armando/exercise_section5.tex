@@ -1,0 +1,41 @@
+\newpage
+\section{Exercise five: PolInSAR}
+In this last exercise, interferometric and polarimetric data are combined. The dataset is obtained from a POLSARsim simulation (a forest stand over bare ground).
+
+\subsection{Read and prepare the data for PolInSAR analysis}
+Read and plot the data: elements of Coherency matrix for each of the acquisitions. Perform the Flat Earth Removal with the provided phase ramp. Compare the interferometric coherences for different polarimetric channels and the two baselines. Which is the polarimetric channel that seems to have lower coherence (higher de-correlation)? Compare the interferometric phase for different polarimetric channels. Where do you see the biggest differences between ground and forest? Select an area on the forest and plot the interferometric coherences of different polarimetric channels on the complex plane (i.e. the polar plot).
+
+\subsection{Forest height retrieval}
+The interferometric phase difference between polarimetric channels keeps information regarding the extent of the volume (i.e. forest). We want to use this information to retrieve the height of the forest.
+
+Firstly, try to convert the phase difference in meters with the $k_z$ and obtain a first estimate of the height. Which are the best polarimetric channels to use in this situation and why?
+
+Then apply the 3 stage inversion of  Cloude and Papathanassiou \cite{cloude03}. Plot coherences on complex plane, fit a line (use IDL LINFIT routine). TIP: to avoid infinite slopes one can also try shifting the points 90 degs (when needed). Find intersection(s) between best-fit line and the unit circle and project the points onto the line. TIP: use the equation of a line and a circle to find intersections. Determine the ground phase (e.g. the one further from XX coherence). Plot the ground phase of all pixels in a histogram. Create and plot lookup table (LUT) for coherence of vegetation: assume XX coherence (projected to best-fit line) has no ground contribution. Perform integral from eqn. 8 (Cloude \& Papathanassiou 2003). Compute 2D LUT (look-up table) with different values of extinction (eg. vary from 0 to 0.2 $m^{-1}$) and height (eg. vary from 0 to 30 m or up to interferometry sensitivity height $h_\pi$). Estimate the vegetation height and extinction from the closest point on the Look-up-table. Plot vegetation height histogram and 3D-plot (shade surface or contour).
+
+\begin{table}[h]
+\footnotesize
+\begin{tabular}{l@{= }lll}
+H & 3e3 & (m) & sensor height\\
+lambda & 0.24 & (m) & wavelength, L-band\\
+$B_{12}$ & -10 & (m)  & horizontal baseline between image 1 \& 2\\
+$B_{13}$ & -20 & (m) & horizontal baseline between Image 1 \& 3\\
+W  & 100e6] & (Hz) & bandwidth in range\\
+grng\_res & 0.5 & (m) & ground range pixel spacing\\
+$\theta_0$ & 45 & ($^\circ$)  & angle of incidence to image centre, assume constant for small area\\
+$c$ & 3e8 & (m/s) & speed of light\\
+$R_m$ & $H/\cos\theta_0$ & (m) & broadside range\\
+$\alpha$ &  0  & ($^\circ$)& local slope\\
+\end{tabular}
+\caption{Parameters for the calculation and of sim\_data\_rvog}
+\end{table}
+\noindent
+The input parameters are:\\
+topographic phase = 0.0\\
+extinction = 0.1 dB/m\\
+height = 10 m\\
+
+\begin{thebibliography}{123}
+\bibitem{cloude03} Cloude \& Papathanassiou "Three-stage inversion process for polarimetric SAR interferometry", 2003.
+\bibitem{cloude98} Cloude \& Papathanassiou "Polarimetric SAR Interferometry",1998.
+\bibitem{papa01} Papathanassiou \& Cloude "Single-Baseline Polarimetric SAR Interferometry", 2001.
+\end{thebibliography}

@@ -1,0 +1,44 @@
+\newpage
+\section{Exercise two: 2D data}
+You will find the formulas required for the range and azimuth chirp rates in the tutorial on epsilon nought (http://epsilon.nought.de/).
+
+\subsection{2D Chirp (point target)}
+Use the information in the file \textit{chirp\_2d\_test\_constants.txt} and \textit{chirp\_2d\_test.dat} to focus (or compress) a 2-D chirp.
+.DAT format: two longs (range and azimuth dimensions) followed by complex values
+(IDL functions that may help: openr, readu, close, free\_lun, lonarr, complexarr, shade\_surf)
+
+\subsubsection{Compress 2D pulse}
+
+As for the previous exercise. Just pay attention at building the right reference function given the nominal parameters.
+
+Plot raw data before and after compression in time and frequency domain (what is the best way to represent them?). Plot also the reference functions. Are the spectra overlapping?
+
+\subsubsection{Compress 2D pulse with Hamming in azimuth}
+
+As for the 1D chirp. Can you notice any difference with the 2D compressed previously? Why?
+
+\subsubsection{Multi-look compression in azimuth}
+Literature: \textit{Chapter 2.2 in the "Scientific SAR User's Guide" by Coert Olmsted}.
+
+Use two split synthetic apertures (raw data in azimuth) to obtain two instances of the same compressed image, then average them. What do you need to average (the complex numbers, the intensities, the phases)? And why the variance reduces? 
+
+Do the same obtaining the two "independent" realisations considering two splits of the Fourier transform in azimuth. Does the result change? And why?
+
+IDL-functions that you may need: \textit{mean, max, min}
+
+
+\subsection{ERS simulated raw data: range and azimuth compression}
+Use the information in the file \textit{ers\_constants.txt} and \textit{ers\_raw\_demo.dat} to focus (or compress) an ERS simulated SAR signal. Note, that the transmitted signal is a negative chirp ($Bw = -1.55404d7$).
+
+Perform the same analysis than before. Pay particular attention on signals in both time and frequency.
+(tip: you might want to scale the amplitudes after Hamming to conserve power)
+(IDL functions that may help: tv, bytscl, congrid, hanning)\\
+Literature: \textit{Chapter 3.1 in the "Scientific SAR User's Guide" by Coert Olmsted}.
+
+
+\subsection{2D simulated data with range already compressed}
+Use the information in the file \textit{rdemo040689\_cmp\_constants.txt} and \textit{rdemo040689\_cmp.dat} to focus (or compress) a 2-D chirp.
+
+Same analysis than before. 
+
+Is the interpretation of this compressed image easy? Why it is so hard to understand different features in the image? What would you suggest to make the image of easier visual interpretation?

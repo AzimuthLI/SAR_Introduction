@@ -1,0 +1,28 @@
+\newpage
+\section{Exercise four: Polarimetry}
+Data set: Alling data set of 2000 %, for incidence angle of scene and land: use 4-digit code of subset 'DDdm', (= DD.d degree, m mask) of GIM products (paper 6)
+\begin{enumerate}
+\usecounter{enumi}
+\item Visualize power (absolute-squared) of [S]-Matrix Elements (Shh, Svv, Sxx) in dB (coloured). Take care: $\sigma_0$=Power of S-matrix-element*(sin(incidence))/1000000. dB = $10\cdot\log_{10}(Power[W]/\unit[1]{W})$  Plus calculate the histograms for everything. 
+\item Calculate polarimetric coherences (HH-VV, HH-XX, VV-XX, LL-RR) and visualize the absolute and the phase of the coherence in black and white. Plus calculate the histograms for everything. 
+\item Calculate the Covariance Matrix [C] and visualize the elements C1, C22, C33 as powers and the elements C13, C23, C12 as powers and their phases. Plus calculate the histograms for everything. (\cite{PottierB}, chap. 3ff, 3.2).
+\item Calculate the Coherency Matrix [T] and visualize the elements T11, T22, T33 as powers and the elements T13, T23, T12 as powers and their phases. Plus calculate the histograms for everything. (\cite{PottierB}, chap. 3ff, 3.3).
+\item Calculate the Total power (=span = Froboenius norm = Tr$(SS^*)$, \cite{PottierB},chap. 3.2.2) of the [S]-, the [T]- and the [C]-matrix, visualize the images and plot all three histograms in one plot. What is the outcome? (\cite{PottierB}, chap. 3ff.).
+\item Calculate the eigenvalues and eigenvectors of the [T]-matrix in an analytical way (\cite{PottierB}, appendix A.6) and with the built-in IDL routine 'LA\_Eigenql'. Compare both solutions. Differences between the solutions? Visualize the eigenvalues and compute the histograms? Do you notice anything, if you compare them?
+\item Calculate the entropy (H), alpha angle (alpha), dominant alpha angle (alpha from dominant eigenvalue=alpha1) and anisotropy (A), Visualize in colour and plot the histograms.  (\cite{PottierB}, chap 7.).
+\item Visualize entropy-alpha in a 2D-histogram plot and compare with the classification published in \cite{CloudeP2} and \cite{PottierB} (chap. 7.8). Plus visualize H-A in a 2D-histogram plot. 
+%\item Make the noise filtering with the 4th eigenvalue and redo step 7., 8., (11., 12.) \cite{HajnsekP2}
+\item Calculate a model-based decomposition (Freeman-Durden) on the [T]-matrix using \cite{YamaguchiP}, calculate the powers and visualize the powers. Is there a problem with this decomposition?
+%\item[\addtocounter{enumi}{1}(\number\value{enumi})] Calculate X-Bragg model of \cite{HajnsekP1}. and show the modelled results for entropy and alpha in a 2D-entropy-alpha-plane. 
+%\item[\addtocounter{enumi}{1}(\the\value{enumi})] Invert the calculated entropy and alpha layers from the data with the X-Bragg modelled entropy and alpha values for soil moisture and a roughness angle \cite{HajnsekP1}. Visualize the soil moisture and the roughness angle. Plus calculate the histograms for both. 
+\end{enumerate}
+\begin{thebibliography}{123}
+%\bibitem{IrenaT} Dissertation: Chapter 5 of Irena's Dissertation. 
+\bibitem{PottierB} Book: Polarimetric RADAR imaging: From basics to applications (Lee, Pottier) - chapter 2-3 and chapter 6-7 
+\bibitem{CloudeP1} Paper: A review of target decomposition theorems in RADAR polarimetry (Cloude \& Pottier) 
+\bibitem{CloudeP2} Paper: An entropy based classification scheme for land applications of polarimetric SAR (Cloude \& Pottier) 
+%\bibitem{HajnsekP1} Paper: Inversion of surface parameters from polarimetric SAR (Hajnsek \& Pottier \& Cloude) 
+\bibitem{YamaguchiP} Paper: A Four-Component Decomposition of PolSAR images based on the coherency matrix (Yamaguchi \& Yajima \& Yamada) 
+%\bibitem{HajnsekP2} Paper: Removal of Additive Noise in Polarimetric Eigenvalue Processing (Hajnsek, Papathanassiou, Cloude)
+%\bibitem[-] Manual: TerraSAR-X - Ground Segment - Basic Product Specification Document (Fritz \& Eineder) 
+\end{thebibliography}

@@ -1,0 +1,41 @@
+\newpage
+\section{Exercise three: InSAR: Interferometry}
+
+\subsection{Read the data}
+
+Interferometric data considers two independent acquisitions, separated by a spacial (and eventually temporal) baseline. You can use the simulated SIR-X data with nominal parameters provided (note, this are simulated data, the reality is a bit more complex!).
+
+Read the two .dat files. They are in xdr format with header (first two long integer). Visualise the intensity (or dB power) of the images. Do they appear fairly similar or very different? Why? Then visualise the phases. Can you see anything in the separated phase images? Why?
+
+\subsection{Corregistration}
+
+First step is to make the two images overlap each other (why?). We can perform a 2-D cross-correlation to find range/azimuth shifts between image 1 and image 2 (in frequency domain and you may want to use some zero padding). Why the cross-correlation is not centered in (0,0)? Among what do you perform the correlation (complex pixel, magnitude, phase)? Why?
+
+With the information regarding the cross-correlation maximum shift image 2 to align with image 1.
+
+Can you see a situation when this processing fall (it leads to large errors)? How would you solve the problem in such situation?
+
+Let $x(t)$ and $y(t)$ be two signals. The cross-correlation function is defined as
+ \begin{align}
+ R_{xy}(\tau) &= \int x(t)\cdot y^*(t+\tau)dt = \mathcal{F}^{-1}\left\{X(f)\cdot Y^*(f)\right\}
+ \end{align}
+
+\subsection{Interferogram: first attempt}
+
+Obtain the interferogram considering the phase of the scalar product between the co-respective pixels (i.e. image cross correlation). Plot absolute value and phase of the product. You are now looking at the fringes!
+
+\subsection{Flat Earth Removal}
+Why all the fringes seem to be aligned along the range direction? Is this related to terrain topography? The removal can be done knowing exactly the orbital parameters, but here we can use a trick since the data "low complexity" allows it. Look for the dominant frequency component of the fringes (with an FFT) and remove it from the spectrum. What do you need to transform? How do you remove the component from the second image?
+
+\subsection{Coherence}
+Compute the coherence as the averaged normalised inner product between the image pixels. The averaging is commonly refereed with filtering. Use a simple box-car filter (i.e. rectangular moving window). Display magnitude and phase of the coherence for different values of the moving window. How magnitude and phase change and why?
+
+Compute the coherence before and after the Flat Earth Removal. Is the coherence magnitude changing?
+
+
+\subsection{Range Filtering: Common Band Filter}
+Perform range filtering on the two coregistered images from Gatelli94 (preserve only overlapping bandwidth between master and slave). To see better the bands you may consider some averaging.
+
+Is the coherence magnitude changing now? Why removing the slices of bandwidth is helping, since they will disappear anyway after the product? Is there some relation between the bands shift and the Flat Earth? Can you try to explain this visualising what happen to the fringes when the bands separate too much, and how this is related to the Flat Earth?
+
+Display histograms of coherences BEFORE and AFTER range filtering.

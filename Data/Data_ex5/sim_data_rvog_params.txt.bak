@@ -1,0 +1,14 @@
+;constants for sim_data_rvog
+
+H = 3e3			;(sensor height, m)
+lambda = 0.24		;(wavelength, L-band, m)
+B_12 = -10		;(horz baseline btw Im1&2, m)
+B_13 = -20		;(horz baseline btw Im1&3, m)
+W = 100e6		;(bandwidth in range, Hz)
+grng_res = 0.5		;(ground rng pixel spacing, m)
+theta = 45*!DTOR	;(angle of incidence to img centre, assume constant for small area) (rads)
+c = 3e8			;(speed of light, m/s)
+R0 = H/cos(theta)	;broadside range (m)
+alpha = 0		;local slope 
+k = 4*!PI/lambda	;wave number
+

@@ -1,0 +1,40 @@
+\newpage
+\section{Exercise three: InSAR: Interferometry}
+Radar interferometry usually contains the following processing steps: precise coregistration (with sub-pixel accuracy) of two radar images in the single-look-complex format (usually done based on the image intensity. "{}Spectral diversity"{} is another method). After coregistration an interferogram is formed. The phase if the interferogram contains information about surface deformation and topography (with some phase contribution from the atmosphere) and the coherence is a measure how reliable individual phase values are. Usually, one subtracts a known phase from the interferogram and analyses only the residual phase with respect to the reference. The know phase usually represents a rough estimate (as precise as possible) of the topography. In this exercise this estimate is so rough that the earth is assumed to be flat and that the radar incidence angle does not vary across the scene. For a flat earth, the remaining phase (after subtracting the flat-earth-phase) corresponds to the topography. Each phase cycle represents a certain height step. On says the height-of-ambiguity $HoA = 100$m when one phase cycle of $2\pi$ corresponds to a height of 100 meters. 
+
+The coherence, which is basically the correlation coefficient between two SLC images, can be affected by various contributions which cause a decorrelation of the radar images. This can be a bad signal-to-noise ratio (e.g. from low backscatter on water), temporal decorrelation (when the two images where acquired at different times), baseline decorrelation because the image spectra do not completely overlap.
+
+\subsection{COREG and FLAT EARTH PHASE}
+\subsubsection{coregistration}\label{coreg}
+Coregistration is done here only on the pixel-level and not with sub-pixel precision.
+\begin{itemize}
+\item Read-in the two .dat files.
+\item Perform 2-D cross-correlation to find range/azimuth shifts between image 1 and image 2. Use a simple amplitude cross correlation function. Hint: The cross correlation is most efficient when performed in frequency domain: Let $x(t)$ and $y(t)$ be two signals. The cross-correlation function is defined as
+ \begin{align}
+ R_{xy}(\tau) &= \int x(t)\cdot y^*(t+\tau)dt = \mathcal{F}^{-1}\left\{x(\nu)\cdot y^*(\nu)\right\}
+ \end{align}
+ \item Shift image 2 so that it aligns with image 1.
+\end{itemize}
+ 
+\subsection{phase correlation method}
+Implement the phase correlation method \cite{zitova04} and analyze the position of the peak of the 2D-cross correlation function with sub-pixel accuracy (can be done manually). Shift the image using an appropriate interpolation method (bilinear, sinc, fft).
+
+\subsection{Interferometric coherence}
+Calculate the complex valued coherence from the two coregistered SLC images. Use different filter windows (3x3...11x11). Plot magnitude and phase of the coherence.
+
+\subsubsection{Remove flat earth phase}
+Identify the dominant frequency component in the phase of the interferogram (of the coherence), i.e. identify the dominant fringe frequency. This can be done using an fft or just by counting fringes and determining their main direction. Generate a 2D-matrix which contains the flat-earth phase. Multiply the flat earth phase as an exponential $e^{-1\vec{k}_\text{flat} \cdot \vec x}$ with one of the SLC images to remove the flat-earth phase before calculating the coherence. How and where does the coherence change when applying the flat-earth removal? 
+
+\subsection{common range-spectrum filtering}
+comment: This is a very advanced interferometric processing step and might not be too important for now.
+\begin{itemize}
+\item Perform common range-spectrum filtering on the two coregistered images from \ref{coreg}. (According to \cite{gatelli94}, \cite{zebker92}): First determine the wave-number shift between the two images based on the fringe-frequency of the interferogram where the flat earth phase has not yet been removed. Then remove the Hamming-filter from the range-spectra of both images. Apply two new Hamming-like filter functions which are shifted against each other corresponding to the wave-number shift of the two images (this preserves only overlapping bandwidth of the two images, called master and slave). Then refocus the two images and calculate the interferogram. 
+\item Display histograms of coherences BEFORE and AFTER range filtering.
+\item Does the resolution of the images change?
+\end{itemize}
+
+\begin{thebibliography}{123}
+\bibitem{zitova04} Image registration methods: a survey, Zitova, B, and Flusser, J., Image and Vision Computing, 2003, p.977-1000, vol 21.
+\bibitem{zebker92}  Zebker, H.A. and Villasenor, J., Decorrelation in interferometric radar echoes, 1992, vol. 30, no. 5, p.950-959, 10.1109/36.175330
+\bibitem{gatelli94} Gatelli, F. and Guamieri, A.M. and Parizzi, F. and Pasquali, P. and Prati, C. and Rocca, F., The wavenumber shift in {SAR} interferometry, 1994, vol. 32, no. 4, p.855 -865, 10.1109/36.298013,
+\end{thebibliography}

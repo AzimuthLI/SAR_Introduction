@@ -1,0 +1,33 @@
+\newpage
+\section{Exercise four: Polarimetry}
+
+\subsection{Read an visualise polarimetric data}
+Data set: Real E-SAR data quad-polarimetric in L-band (Alling, Germany 2000). The data can be read as for the previous case. Plot the intensity images for each polarimetric channel. Are the images different and why? Try to visualise the intensity after some smoothing with a boxcar filter. Why the images are different after the smoothing? To know why, take one of the images, select an area that appear homogeneous (e.g. one field) and plot the histograms of the single and averaged intensity (with different averaging windows). Are these histograms resembling some pdf that you already saw in the literature?
+
+\subsection{Polarimetric coherences}
+As for the interferometric case, it is interesting to evaluate the coherence (normalised cross correlation, or normalised inner product of each pixel) to understand how the polarimetric channels are correlated each other. Calculate the coherences between the co-polarisations (HH/VV), the cross-polarisations (HV/VH), the co and cross polarisations (HH/HV, VV/VH), using two different dimensions of moving window. Comment on the result. What happen when the window is 1x1, why HV/VH is so high (or so low)? To compare the different coherences you may also plot their histogram on the same figure.
+Is it worth to plot the phases as well? Take the same area used before for evaluating the histograms and plot the histogram of magnitude and phase of some coherence. What happen when you average?
+
+\subsection{Polarimetric Covariance Matrix}
+I hope at this moment it is clear that we need to average the data to extract more reliable information. A way to have a compact and physically meaningful representation is to consider the covariance matrix of the three polarimetric channels over a sorter moving window. $[C]$ considers the second order statistics of the polarimetric channels, in the Gaussia assumption these are necessary and sufficient to characterise our (statistical) scattering process. What properties $[C]$ has? Is it really important that it has these properties or we don't really care? Plot the diagonal and off diagonal elements of $[C]$. Do you find any relationship with what you were plotting in the two previous points? Could you find a mathematical link with the observables in the previous two points?
+
+\subsection{Pauli basis}
+One you have the Scattering matrix you have all the information. So you can simulate any other polarimetric channels or decide the mapping procedure to express $[S]$ in a more easily tractable vector space. A clever way to perform this mapping is using the Pauli spin basis. Calculate the components of the scattering vector in Pauli basis and estimate its covariance matrix (in the community it is preferred to call it Coherency matrix $[T]$). Plot again diagonal and off diagonal terms. Visualise the first three diagonal terms in an RGB image. Can you try to assign some physical interpretation to the colours? Calculate the Span of $[S]$ (Frobenious Norm $||[S]||$), the norm of the scattering vector, the Trace of $[C]$ ($Tr([C])$) and the Trace of $[T]$ ($Tr([T])$). What is their relationship and why?
+
+\subsection{Cloude-Pottier decomposition}
+Why do we "decompose" polarimetric data? What are the basis of the Cloude-Pottier decomposition. Calculate the eigenvalues and eigenvectors of [T]. Plot the eigenvalues, singularly and in an RGB. Calculate the entropy (H), alpha angle (alpha), dominant alpha angle and anisotropy. Visualize entropy-alpha in a 2D-histogram plot and compare with literature. Why there is a boudary region? Make the noise remouval with the 4th eigenvalue and recalculate entropy and anisotropy. Did they changed?
+
+\subsection{Yamaguchi decomposition}
+
+Calculate the model-based Yamaguchi decomposition (Freeman-Durden) on the [T]-matrix using \cite{YamaguchiP}, calculate the powers and visualize the powers. Is there a problem with this decomposition?
+
+\begin{thebibliography}{123}
+\bibitem{IrenaT} Dissertation: Chapter 5 of Irena's Dissertation.
+\bibitem{PottierB} Book: Polarimetric RADAR imaging: From basics to applications (Lee, Pottier) - chapter 2-3 and chapter 6-7
+\bibitem{CloudeP1} Paper: A review of target decomposition theorems in RADAR polarimetry (Cloude \& Pottier)
+\bibitem{CloudeP2} Paper: An entropy based classification scheme for land applications of polarimetric SAR (Cloude \& Pottier)
+\bibitem{HajnsekP1} Paper: Inversion of surface parameters from polarimetric SAR (Hajnsek \& Pottier \& Cloude)
+\bibitem{YamaguchiP} Paper: A Four-Component Decomposition of PolSAR images based on the coherency matrix (Yamaguchi \& Yajima \& Yamada)
+\bibitem{HajnsekP2} Paper: Removal of Additive Noise in Polarimetric Eigenvalue Processing (Hajnsek, Papathanassiou, Cloude)
+%\bibitem[-] Manual: TerraSAR-X - Ground Segment - Basic Product Specification Document (Fritz \& Eineder)
+\end{thebibliography}
